@@ -1,0 +1,16 @@
+./install-play # install the last stable version
+./install-play 1.2.1RC1 # install 1.2.1RC1
+./install-play -s # overview
+
+
+variables:
+PLAY_DIR - path to directory with multiple Play! versions
+PLAY_VERSION - current Play! version
+PLAY_PYTHON_VERSION - current python version (applied when installing only)
+
+Quick start:
+1. Set PLAY_DIR to an empty directory.
+2. Add this directory to PATH.
+3. install-play
+4. Set PLAY_VERSION or "$PLAY_DIR/current.version".
+5. play new, play run, ...
