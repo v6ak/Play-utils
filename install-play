@@ -27,7 +27,7 @@ case $# in
 			-s|-status|--status )
 				echo "Play! directory: $PLAY_DIR"
 				echo "Play! versions:"
-				ls "$PLAY_DIR" | sed 's/play-/ * /'
+				ls "$PLAY_DIR" | grep 'play-' | sed 's/play-/ * /'
 				echo -n "Python version: "
 				if [ "$PLAY_PYTHON_VERSION" == "" ]; then
 					echo "default"
