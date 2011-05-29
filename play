@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ "$PLAY_DIR" == "" ]; then
+	echo 'Set $PLAY_DIR, please.'
+	exit 1
+fi
+
+if [ "$PLAY_VERSION" == "" ]; then
+	if [ -e play.version ]; then
+		version=$(cat play.version)
+	else
+		if [ -e "$PLAY_DIR/current.version" ]; then
+			version=$(cat "$PLAY_DIR/current.version")
+		else
+			echo "Specify Play! version, please!"
+			echo "You can specify it in \$PLAY_VERSION, ./play.version or '$PLAY_DIR/current.version'."
+			exit 1
+		fi
+	fi
+else
+	version="$PLAY_VERSION"
+fi
+
+
+dir="$PLAY_DIR/play-$version"
+
+if [ ! -e "$dir" ]; then
+	echo "Version $version has not been installed."
+	echo "For more information, use instal-play -s"
+	exit 1
+fi
+
+"$dir/play" $*

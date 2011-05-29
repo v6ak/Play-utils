@@ -1,0 +1,93 @@
+#!/bin/bash
+name="install-play"
+function usage {
+	echo "usage:"
+	echo "$name <play-version> # download a specific version"
+	echo "$name # download the last version"
+	echo "$name -h # help"
+	echo "$name -help # help"
+	echo "$name --help # help"
+}
+
+# process arguments
+case $# in
+	0 )
+		version=$(
+			wget -q -O - http://www.playframework.org/download |
+			grep -o 'The latest official version is .*</strong>' |
+			sed 's/The latest official version is <strong>\(.*\)<\/strong>/\1/g'
+		)
+		;;
+	1 )
+		case "$1" in
+			-h|--help|-help )
+				usage
+				exit
+				;;
+			-s|-status|--status )
+				echo "Play! directory: $PLAY_DIR"
+				echo "Play! versions:"
+				ls "$PLAY_DIR" | sed 's/play-/ * /'
+				echo -n "Python version: "
+				if [ "$PLAY_PYTHON_VERSION" == "" ]; then
+					echo "default"
+				else
+					echo -n "$PLAY_PYTHON_VERSION"
+					if echo '' | env "python$PLAY_PYTHON_VERSION" &> /dev/null; then
+						echo " (exists)"
+					else
+						echo " (MISSING!)"
+					fi
+				fi
+				exit
+				;;
+			*)
+				version="$1"
+		esac
+		;;
+	*)
+		echo "ERROR: too much arguments"
+		usage
+		exit 5
+		;;
+esac
+
+if [ "$PLAY_DIR" == "" ]; then
+	echo 'Set $PLAY_DIR, please.'
+	exit 1
+fi
+
+####################
+url="http://download.playframework.org/releases/play-$version.zip"
+file="/tmp/play-$version.zip"
+dir="$PLAY_DIR/play-$version"
+current_version_file="$PLAY_DIR/current.version"
+
+if [ -e "$dir" ]; then
+	echo "You've already installed Play $version."
+	exit 4
+fi
+
+echo "Downloading Play! $version..."
+if wget -O "$file" "$url"; then
+	echo "Unzipping Play! $version..."
+	if unzip -q "$file" -d "$PLAY_DIR"; then
+		if [ "$PLAY_PYTHON_VERSION" != "" ]; then
+			echo "Patching for Python $PLAY_PYTHON_VERSION..."
+			env_hashbang_base='#!\/usr\/bin\/env'
+			sed -i "s/$ENV_HASHBANG_BASE python/$ENV_HASHBANG_BASE python$PLAY_PYTHON_VERSION/" "$dir/play"
+		else
+			echo "Leaving the default Python version. If you have Python related problems, you should set \$PLAY_PYTHON_VERSION."
+		fi
+		echo "Cleaning..."
+		rm "$file" "$dir/play.bat"
+		rm -r "$dir/python"
+		echo "Done."
+	else
+		echo "Unzip failed!"
+		exit 3
+	fi
+else
+	echo Download failed!
+	exit 2
+fi
