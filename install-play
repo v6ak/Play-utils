@@ -95,8 +95,10 @@ if wget -O "$file" "$url"; then
 		fi
 		echo "Cleaning..."
 		rm "$file"
-		rm "$dir/play.bat" # TODO: disable on cygwin
-		rm -r "$dir/python" # TODO: disable on cygwin
+		if [ "$(uname -o)" != "Cygwin" ]; then
+			rm "$dir/play.bat"
+			rm -r "$dir/python"
+		fi
 		echo "Done."
 		b="nothing"
 		while [ "$b" != "y" -a "$b" != "n" -a "$b" != "" ];do
