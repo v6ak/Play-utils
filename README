@@ -2,7 +2,7 @@ There are some scripts that simplify management of multiple Play! versions.
 
 These scripts should work on many UNIX-like OSes. However, they have been tested on some Linux discributions only (including Fedora and Ubuntu; Gentoo will be added probably soon).
 
-They probably don't work correctly under Windows + Cygwin.
+Cygwin is patrially supported. It should basically work, but it can be less comfortable. Windows Python binaries and play.bat aren't deleted since you need then if you aren't using Cygwin.
 
 Quick start:
 1. Add this directory to PATH. Alternativaly, you can use ./create-links /some/directory/in/path
