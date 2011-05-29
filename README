@@ -10,7 +10,7 @@ PLAY_PYTHON_VERSION - current python version (applied when installing only)
 
 Quick start:
 1. Set PLAY_DIR to an empty directory.
-2. Add this directory to PATH.
+2. Add this directory to PATH. Alternativaly, you can use ./create-links /some/directory/in/path
 3. install-play
 4. Set PLAY_VERSION or "$PLAY_DIR/current.version".
 5. play new, play run, ...
