@@ -1,0 +1,2 @@
+#!/bin/bash
+ln play install-play "$1"
