@@ -17,6 +17,9 @@ function usage {
 	echo "$name -h # help"
 	echo "$name -help # help"
 	echo "$name --help # help"
+	echo "$name -s # status"
+	echo "$name -status # status"
+	echo "$name --status # status"
 }
 
 # process arguments
