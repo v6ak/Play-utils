@@ -8,7 +8,7 @@ Quick start:
 1. Add this directory to PATH. Alternativaly, you can use ./create-links /some/directory/in/path
 2. Set PLAY_DIR to an empty directory. You can use set-play-dir script.
 3. install-play # or install-play <specific version>
-4. play new, play run, ...
+4. play new my-great-project, play run, ...
 
 
 ./create-links /usr/bin # create links in /usr/bin
