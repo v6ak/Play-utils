@@ -64,6 +64,7 @@ esac
 
 if [ "$PLAY_DIR" == "" ]; then
 	echo 'Set $PLAY_DIR, please.'
+	echo "You can use set-play-dir."
 	exit 1
 fi
 
@@ -90,9 +91,25 @@ if wget -O "$file" "$url"; then
 			echo "Leaving the default Python version. If you have Python related problems, you should set \$PLAY_PYTHON_VERSION."
 		fi
 		echo "Cleaning..."
-		rm "$file" "$dir/play.bat"
-		rm -r "$dir/python"
+		rm "$file"
+		rm "$dir/play.bat" # TODO: disable on cygwin
+		rm -r "$dir/python" # TODO: disable on cygwin
 		echo "Done."
+		b="nothing"
+		while [ "$b" != "y" -a "$b" != "n" -a "$b" != "" ];do
+			echo -n "Set this version as default? [Y/n] "
+			read b
+		done
+		if [ "$b" == "y" ] || [ "$b" == "" ]; then
+			if echo -n "$version" > "$current_version_file"; then
+				echo "OK, the default Play! version has been updated to $version."
+			else
+				echo "Updating Play! default version failed."
+			fi
+		else
+			echo "OK, the default Play! version is unchanged."
+		fi
+		echo "You can update it in the following file: $current_version_file"
 	else
 		echo "Unzip failed!"
 		exit 3
