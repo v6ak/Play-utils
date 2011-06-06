@@ -1,0 +1,83 @@
+#!/bin/bash
+
+function usage {
+	echo "usage:"
+	echo "set-play-dir"
+	echo "set-play-dir play-dir"
+	echo "set-play-dir play-dir bashrc-location"
+}
+
+
+case $# in
+	0) # autodetect
+		PLAY_DIR=~/Downloads/play
+		bashrc=~/.bashrc
+		;;
+	1) # set PLAY_DIR
+		PLAY_DIR="$1"
+		bashrc=~/.bashrc
+		;;
+	2) # complete defiden
+		PLAY_DIR="$1"
+		bashrc="$2"
+		;;
+	*) 
+		echo "Too much arguments!"
+		usage
+		exit 1
+		;;
+esac
+
+confirmed="n"
+
+while [ "$confirmed" != "y" ]; do
+	echo "You are about to config your Play! framework directory."
+	echo -n "Play! utils installation path: $PLAY_DIR "
+	if [ -e "$PLAY_DIR" ]; then
+		echo "(the directory exists)"
+	else
+		echo "(the directory WILL BE CREATED)"
+	fi
+	echo -n "Your .bashrc location: $bashrc "
+	if [ -e "$bashrc" ]; then
+		echo "(the file exists)"
+	else
+		echo "(the file WILL BE CREATED)"
+	fi
+	echo "[y] - confirm"
+	echo "[p] - edit Play! utils location"
+	echo "[b] - edit .bashrc location"
+	echo "[q] - quit"
+	echo -n "Your choice [y/p/b/q]: "
+	read choice
+	echo
+	case "$choice" in
+		y)
+			epd=$(printf '%q' "$PLAY_DIR")
+			pdec="export PLAY_DIR=$epd"
+			if mkdir -p "$PLAY_DIR" && (echo ; echo "$pdec") >> "$bashrc"; then
+				echo "The Play! utils directory has been configured successfully."
+				echo "You have to open a new terminal to see this change."
+				exit 0
+			else
+				echo "Configuration failed. Check your settings and try it again."
+			fi
+			;;
+		p)
+			echo -n "Play! utils location: "
+			read PLAY_DIR
+			;;
+		b)
+			echo -n ".bashrc location: "
+			read bashrc
+			;;
+		q)
+			echo "Goodbye."
+			exit 2
+			;;
+		*)
+			echo "Invalid choice!"
+			echo
+			;;
+	esac
+done
