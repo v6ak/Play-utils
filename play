@@ -23,6 +23,7 @@ if [ "$PLAY_VERSION" == "" ]; then
 		else
 			echo "Specify Play! version, please!"
 			echo "You can specify it in \$PLAY_VERSION, ./play.version or '$PLAY_DIR/current.version'."
+			echo "If you don't have any Play installed, use install-play."
 			exit 1
 		fi
 	fi
