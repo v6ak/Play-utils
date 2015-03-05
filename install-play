@@ -25,11 +25,10 @@ function usage {
 # process arguments
 case $# in
 	0 )
-		version=$(
-			wget -q -O - http://www.playframework.org/download |
-			grep -o 'The latest official version is .*</strong>' |
-			sed 's/The latest official version is <strong>\(.*\)<\/strong>/\1/g'
-		)
+		echo Installing the last version is no longer supported since this script works only with 1.x branch.
+		echo If you want Play 1.x, you have to explicitly specify the version.
+		echo If you want Play 2.x or newer, you should use Typesafe Activator instead.
+		exit 1
 		;;
 	1 )
 		case "$1" in
@@ -72,7 +71,7 @@ if [ "$PLAY_DIR" == "" ]; then
 fi
 
 ####################
-url="http://download.playframework.org/releases/play-$version.zip"
+url="https://downloads.typesafe.com/play/$version/play-$version.zip"
 file="$(mktemp)"
 dir="$PLAY_DIR/play-$version"
 current_version_file="$PLAY_DIR/current.version"

@@ -1,3 +1,19 @@
+This set of scripts is ABADONNED and OBSOLETE. The only reason for the recent commit was fixing a symlink race vulnerability.
+
+If you use Play 2.*, this set of scripts is not needed and you should use Activator instead.
+
+If you use Play 1.*, this set of scripts might be useful, but I do not maintain it. So, I am not 100% sure if it works for recent Play versions.
+
+
+
+
+
+
+
+
+
+
+
 There are some scripts that simplify management of multiple Play! versions.
 
 These scripts should work on many UNIX-like OSes. However, they have been tested on some Linux discributions only (including Fedora, Ubuntu and Gentoo).
