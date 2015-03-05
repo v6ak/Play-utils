@@ -73,7 +73,7 @@ fi
 
 ####################
 url="http://download.playframework.org/releases/play-$version.zip"
-file="/tmp/play-$version.zip"
+file="$(mktemp)"
 dir="$PLAY_DIR/play-$version"
 current_version_file="$PLAY_DIR/current.version"
 
